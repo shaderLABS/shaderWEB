@@ -1,12 +1,18 @@
 <script context="module" lang="ts">
 	export async function load({ fetch }) {
-		const user = await fetchData('/api/user/me', fetch).catch(() => undefined);
-		return { props: { user } };
+		const data = await fetchData('/api/user/me', fetch);
+
+		// 200 OK - user is logged in, data in response
+		// 204 No Content - user not logged in, no data available
+		if (data.status == 200) {
+			return { props: { user: await data.json() } };
+		}
+
+		return { props: { user: undefined } };
 	}
 </script>
 
 <script lang="ts">
-	import { browser } from '$app/env';
 	import { BanInformation, fetchData, formatTime, logIn, logOut, sendAppeal, UserInformation } from '$lib/api';
 	import {
 		Alert,
@@ -31,10 +37,12 @@
 	export let user: UserInformation;
 
 	let appealReason: string = '';
-	let ban: BanInformation = undefined;
+	let ban: BanInformation;
 
-	if (browser && user?.isBanned) {
-		fetchData('/api/ban/me').then((data) => (ban = data));
+	if (user?.isBanned) {
+		fetchData('/api/ban/me')
+			.then((raw) => raw.json())
+			.then((data) => (ban = data));
 	}
 </script>
 
@@ -55,7 +63,7 @@
 	<Card hover>
 		<div class="flex justify-center items-center p-4">
 			<Avatar class="w-24 h-24">
-				<img src={user.avatarURL} alt="avatar" />
+				<img width="96" height="96" src={user.avatarURL} alt="avatar" />
 			</Avatar>
 			<div>
 				<CardTitle>{user.username}#{user.discriminator}</CardTitle>

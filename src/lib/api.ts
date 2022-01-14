@@ -49,16 +49,14 @@ export function formatTime(time: string) {
 	});
 }
 
-export async function fetchData(endpoint: string, fetchFunction: (input: RequestInfo, init?: RequestInit) => Promise<Response> = fetch) {
-	return (
-		await fetchFunction(import.meta.env.VITE_API_URL + endpoint, {
-			method: 'GET',
-			headers: {
-				Accept: 'application/json',
-			},
-			credentials: 'include',
-		})
-	).json();
+export function fetchData(endpoint: string, fetchFunction: (input: RequestInfo, init?: RequestInit) => Promise<Response> = fetch) {
+	return fetchFunction(import.meta.env.VITE_API_URL + endpoint, {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json',
+		},
+		credentials: 'include',
+	});
 }
 
 export function logIn() {

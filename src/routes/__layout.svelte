@@ -5,15 +5,15 @@
 	import { AppBar, Button, Footer, Icon, MaterialAppMin, Snackbar } from 'svelte-materialify/src';
 	import '../tailwind.css';
 
-	let showSnackbar = false;
-	snackbar.subscribe((value) => (showSnackbar = value !== undefined));
+	let snackbarVisible = false;
+	snackbar.subscribe((value) => (snackbarVisible = !!value));
 
 	const errorCode = $page.url.searchParams.get('error');
 	if (errorCode) $snackbar = { content: decodeError(errorCode) };
 </script>
 
 <MaterialAppMin theme={$theme}>
-	<Snackbar class="{$snackbar?.color || 'red'} flex-column" center bottom bind:active={showSnackbar} timeout={$snackbar?.timeout || 5000}>{$snackbar?.content}</Snackbar>
+	<Snackbar class="{$snackbar?.color || 'red'} flex-column" center bottom bind:active={snackbarVisible} timeout={$snackbar?.timeout || 5000}>{$snackbar?.content}</Snackbar>
 
 	<div class="flex flex-col min-h-screen justify-between">
 		<AppBar class="grow-0">
@@ -41,7 +41,8 @@
 		<Footer class="grow-0 text-center text-sm p-4">
 			<div class="w-full">
 				<p>Copyright &copy; 2021 - 2022, shaderLABS.</p>
-				<p>The source code of this website is available on <a href="https://github.com/shaderLABS">GitHub</a>.</p>
+				<p>Solely essential cookies are used, such as a session cookie to keep you logged in.</p>
+				<p>The source code of this website is available on <a href="https://github.com/shaderLABS/shaderWEB">GitHub</a>.</p>
 			</div>
 		</Footer>
 	</div>
