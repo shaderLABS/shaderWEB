@@ -13,12 +13,10 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			pages: 'dist',
-			assets: 'dist',
 			precompress: true,
+			fallback: 'index.html',
 		}),
 		target: '#svelte',
-		ssr: false,
 	},
 };
 
