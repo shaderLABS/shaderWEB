@@ -10,13 +10,13 @@ var charsetRemoval = () => {
 				if (atRule.name === 'charset') {
 					atRule.remove();
 				}
-			}
-		}
+			},
+		},
 	};
 };
 
 const config = {
-	plugins: [charsetRemoval(), tailwindcss(), autoprefixer()]
+	plugins: [charsetRemoval(), tailwindcss(), autoprefixer()],
 };
 
 module.exports = config;

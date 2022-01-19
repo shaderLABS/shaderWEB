@@ -41,7 +41,9 @@
 
 	if (user?.isBanned) {
 		fetchData('/api/ban/me')
-			.then((raw) => raw.json())
+			.then((raw) => {
+				if (raw.ok) return raw.json().catch(() => undefined);
+			})
 			.then((data) => (ban = data));
 	}
 </script>
@@ -101,7 +103,13 @@
 								</DataTableRow>
 								<DataTableRow>
 									<DataTableCell><b>Context</b></DataTableCell>
-									<DataTableCell>{ban.context_url || 'No context exists.'}</DataTableCell>
+									<DataTableCell>
+										{#if ban.context_url}
+											<a href={ban.context_url} target="_blank">click here</a>
+										{:else}
+											No context exists.
+										{/if}
+									</DataTableCell>
 								</DataTableRow>
 								<DataTableRow>
 									<DataTableCell><b>Expiring At</b></DataTableCell>
