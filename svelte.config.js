@@ -16,7 +16,6 @@ const config = {
 			precompress: true,
 			fallback: 'index.html',
 		}),
-		target: '#svelte',
 	},
 };
 
