@@ -10,8 +10,8 @@ export type UserInformation = {
 
 export type BanAppeal = {
 	result: 'pending' | 'declined' | 'accepted';
-	result_reason?: string;
-	result_timestamp?: string;
+	resultReason?: string;
+	resultTimestamp?: string;
 	timestamp: string;
 };
 
@@ -24,8 +24,8 @@ export type BanInformation = {
 	};
 	appeal?: BanAppeal;
 	reason: string;
-	context_url: string;
-	expire_timestamp: string;
+	contextURL: string;
+	expireTimestamp: string;
 	timestamp: string;
 };
 

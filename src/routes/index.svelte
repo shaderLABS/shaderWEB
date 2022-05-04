@@ -1,19 +1,6 @@
 <script context="module" lang="ts">
-	export async function load({ fetch }) {
-		const data = await fetchData('/api/user/me', fetch);
-
-		// 200 OK - user is logged in, data in response
-		// 204 No Content - user not logged in, no data available
-		if (data.status == 200) {
-			return { props: { user: await data.json() } };
-		}
-
-		return { props: { user: undefined } };
-	}
-</script>
-
-<script lang="ts">
-	import { BanInformation, fetchData, formatTime, logIn, logOut, sendAppeal, UserInformation } from '$lib/api';
+	import { fetchData, formatTime, logIn, logOut, sendAppeal, type BanInformation, type UserInformation } from '$lib/api';
+	import type { Load } from '@sveltejs/kit';
 	import {
 		Alert,
 		Avatar,
@@ -34,6 +21,20 @@
 	} from 'svelte-materialify/src';
 	import { slide } from 'svelte/transition';
 
+	export const load: Load = async ({ fetch }) => {
+		const data = await fetchData('/api/user/me', fetch);
+
+		// 200 OK - user is logged in, data in response
+		// 204 No Content - user not logged in, no data available
+		if (data.status == 200) {
+			return { props: { user: await data.json() } };
+		}
+
+		return { props: { user: undefined } };
+	};
+</script>
+
+<script lang="ts">
 	export let user: UserInformation;
 
 	let appealReason: string = '';
@@ -104,8 +105,8 @@
 								<DataTableRow>
 									<DataTableCell><b>Context</b></DataTableCell>
 									<DataTableCell>
-										{#if ban.context_url}
-											<a href={ban.context_url} target="_blank">click here</a>
+										{#if ban.contextURL}
+											<a href={ban.contextURL} target="_blank">click here</a>
 										{:else}
 											No context exists.
 										{/if}
@@ -113,7 +114,7 @@
 								</DataTableRow>
 								<DataTableRow>
 									<DataTableCell><b>Expiring At</b></DataTableCell>
-									<DataTableCell>{ban.expire_timestamp ? formatTime(ban.expire_timestamp) : 'Permanent'}</DataTableCell>
+									<DataTableCell>{ban.expireTimestamp ? formatTime(ban.expireTimestamp) : 'Permanent'}</DataTableCell>
 								</DataTableRow>
 								<DataTableRow>
 									<DataTableCell><b>Created At</b></DataTableCell>
@@ -146,7 +147,7 @@
 							</Alert>
 						</CardText>
 					{:else}
-						{#if ban.appeal?.result === 'declined'}
+						{#if ban.appeal?.result === 'declined' && ban.appeal.resultTimestamp}
 							<CardText class="pt-0">
 								<Alert class="error-color m-0">
 									<div slot="icon">
@@ -155,10 +156,10 @@
 										/>
 									</div>
 									<p>The ban appeal you sent on {formatTime(ban.appeal.timestamp)} has been declined.</p>
-									<p class="text-xs pt-2">{formatTime(ban.appeal.result_timestamp)}</p>
+									<p class="text-xs pt-2">{formatTime(ban.appeal.resultTimestamp)}</p>
 								</Alert>
-								{#if ban.appeal.result_reason}
-									<div class="text-justify mt-4">{ban.appeal.result_reason}</div>
+								{#if ban.appeal.resultReason}
+									<div class="text-justify mt-4">{ban.appeal.resultReason}</div>
 								{/if}
 							</CardText>
 							<Divider class="pb-4" />
@@ -176,14 +177,14 @@
 	{/if}
 {/if}
 
-<style>
-	:global(.s-text-field__wrapper.outlined),
-	:global(.s-text-field__wrapper.solo),
-	:global(.s-text-field__wrapper.filled) {
+<style global>
+	.s-text-field__wrapper.outlined,
+	.s-text-field__wrapper.solo,
+	.s-text-field__wrapper.filled {
 		padding: 0;
 	}
 
-	:global(.s-textarea .s-text-field__wrapper.solo textarea) {
+	.s-textarea .s-text-field__wrapper.solo textarea {
 		margin: 0;
 	}
 </style>

@@ -3,7 +3,6 @@
 	import { decodeError } from '$lib/api';
 	import { snackbar, theme } from '$lib/stores';
 	import { AppBar, Button, Footer, Icon, MaterialAppMin, Snackbar } from 'svelte-materialify/src';
-	import '../tailwind.css';
 
 	let snackbarVisible = false;
 	snackbar.subscribe((value) => (snackbarVisible = !!value));

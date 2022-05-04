@@ -8,12 +8,13 @@ const config = {
 			scss: {
 				includePaths: ['theme'],
 			},
+			postcss: true,
 		}),
 	],
 
 	kit: {
 		adapter: adapter({
-			precompress: true,
+			precompress: false,
 			fallback: 'index.html',
 		}),
 	},
