@@ -9,7 +9,7 @@ export type UserInformation = {
 };
 
 export type BanAppeal = {
-	result: 'pending' | 'declined' | 'accepted';
+	result: 'pending' | 'declined' | 'accepted' | 'expired';
 	resultReason?: string;
 	resultTimestamp?: string;
 	timestamp: string;
