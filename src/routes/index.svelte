@@ -164,12 +164,20 @@
 							</CardText>
 							<Divider class="pb-4" />
 						{/if}
-						<CardText class="pt-0">
-							<Textarea bind:value={appealReason} counter={2000} solo flat autogrow placeholder="Enter reasons why we should unban you..." />
-						</CardText>
-						<CardActions>
-							<Button block disabled={appealReason.trim().length == 0 || appealReason.length > 2000} on:click={async () => (ban.appeal = await sendAppeal(appealReason))}>SEND</Button>
-						</CardActions>
+						{#if ban.appeal?.result === 'declined' && ban.appeal.resultTimestamp && new Date(ban.appeal.resultTimestamp).getTime() + ban.appealCooldown * 1000 > Date.now()}
+							<CardText class="pt-0">
+								<Alert class="m-0 text-center" outlined text>
+									<p>You can submit another ban appeal on {formatTime(new Date(ban.appeal.resultTimestamp).getTime() + ban.appealCooldown * 1000)}.</p>
+								</Alert>
+							</CardText>
+						{:else}
+							<CardText class="pt-0">
+								<Textarea bind:value={appealReason} counter={2000} solo flat autogrow placeholder="Enter reasons why we should unban you..." />
+							</CardText>
+							<CardActions>
+								<Button block disabled={appealReason.trim().length == 0 || appealReason.length > 2000} on:click={async () => (ban.appeal = await sendAppeal(appealReason))}>SEND</Button>
+							</CardActions>
+						{/if}
 					{/if}
 				</div>
 			{/if}

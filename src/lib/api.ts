@@ -23,6 +23,7 @@ export type BanInformation = {
 		discriminator: number;
 	};
 	appeal?: BanAppeal;
+	appealCooldown: number;
 	reason: string;
 	contextURL: string;
 	expireTimestamp: string;
@@ -38,7 +39,7 @@ export function decodeError(code: string) {
 	}
 }
 
-export function formatTime(time: string) {
+export function formatTime(time: string | number) {
 	return new Date(time).toLocaleString('en-US', {
 		year: 'numeric',
 		month: 'long',
