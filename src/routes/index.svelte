@@ -26,7 +26,7 @@
 
 		// 200 OK - user is logged in, data in response
 		// 204 No Content - user not logged in, no data available
-		if (data.status == 200) {
+		if (data.status === 200) {
 			return { props: { user: await data.json() } };
 		}
 
@@ -175,7 +175,7 @@
 								<Textarea bind:value={appealReason} counter={2000} solo flat autogrow placeholder="Enter reasons why we should unban you..." />
 							</CardText>
 							<CardActions>
-								<Button block disabled={appealReason.trim().length == 0 || appealReason.length > 2000} on:click={async () => (ban.appeal = await sendAppeal(appealReason))}>SEND</Button>
+								<Button block disabled={appealReason.trim().length === 0 || appealReason.length > 2000} on:click={async () => (ban.appeal = await sendAppeal(appealReason))}>SEND</Button>
 							</CardActions>
 						{/if}
 					{/if}
