@@ -1,6 +1,5 @@
-<script context="module" lang="ts">
+<script lang="ts">
 	import { fetchData, formatTime, logIn, logOut, sendAppeal, type BanInformation, type UserInformation } from '$lib/api';
-	import type { Load } from '@sveltejs/kit';
 	import {
 		Alert,
 		Avatar,
@@ -21,35 +20,23 @@
 	} from 'svelte-materialify/src';
 	import { slide } from 'svelte/transition';
 
-	export const load: Load = async ({ fetch }) => {
-		const data = await fetchData('/api/user/me', fetch);
-
-		// 200 OK - user is logged in, data in response
-		// 204 No Content - user not logged in, no data available
-		if (data.status === 200) {
-			return { props: { user: await data.json() } };
-		}
-
-		return { props: { user: undefined } };
-	};
-</script>
-
-<script lang="ts">
-	export let user: UserInformation;
+	export let data: { user: UserInformation | undefined }; // data: PageData
 
 	let appealReason: string = '';
 	let ban: BanInformation;
 
-	if (user?.isBanned) {
+	if (data.user?.isBanned) {
 		fetchData('/api/ban/me')
 			.then((raw) => {
 				if (raw.ok) return raw.json().catch(() => undefined);
 			})
-			.then((data) => (ban = data));
+			.then((data) => {
+				ban = data;
+			});
 	}
 </script>
 
-{#if !user}
+{#if !data.user}
 	<Card hover>
 		<CardTitle class="pb-0">Login with Discord</CardTitle>
 		<CardText>In order to write a ban appeal or view information about your ban status, you need to log in with Discord.</CardText>
@@ -66,11 +53,11 @@
 	<Card hover>
 		<div class="flex justify-center items-center p-4">
 			<Avatar class="w-24 h-24">
-				<img width="96" height="96" src={user.avatarURL} alt="avatar" />
+				<img width="96" height="96" src={data.user.avatarURL} alt="avatar" />
 			</Avatar>
 			<div>
-				<CardTitle>{user.username}#{user.discriminator}</CardTitle>
-				<CardSubtitle>{user.id}</CardSubtitle>
+				<CardTitle>{data.user.username}#{data.user.discriminator}</CardTitle>
+				<CardSubtitle>{data.user.id}</CardSubtitle>
 			</div>
 		</div>
 		<CardActions>
@@ -80,9 +67,9 @@
 
 	<Card hover class="mt-4">
 		<CardTitle>Ban Status</CardTitle>
-		<CardSubtitle>{user.isBanned ? 'You are banned from shaderLABS.' : 'You are not banned from shaderLABS.'}</CardSubtitle>
+		<CardSubtitle>{data.user.isBanned ? 'You are banned from shaderLABS.' : 'You are not banned from shaderLABS.'}</CardSubtitle>
 
-		{#if user.isBanned}
+		{#if data.user.isBanned}
 			{#if !ban}
 				<ProgressLinear indeterminate />
 			{:else}
@@ -128,7 +115,7 @@
 		{/if}
 	</Card>
 
-	{#if user.isBanned}
+	{#if data.user.isBanned}
 		<Card hover class="mt-4">
 			<CardTitle>Ban Appeal</CardTitle>
 			{#if !ban}
@@ -137,7 +124,7 @@
 				<div transition:slide>
 					{#if ban.appeal?.result === 'pending'}
 						<CardText class="pt-0">
-							<Alert class="primary-color m-0">
+							<Alert class="primary-color m-0 black-text">
 								<div slot="icon">
 									<Icon
 										path="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
@@ -149,7 +136,7 @@
 					{:else}
 						{#if ban.appeal?.result === 'declined' && ban.appeal.resultTimestamp}
 							<CardText class="pt-0">
-								<Alert class="error-color m-0">
+								<Alert class="error-color m-0 black-text">
 									<div slot="icon">
 										<Icon
 											path="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z"
