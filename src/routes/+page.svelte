@@ -56,7 +56,7 @@
 				<img width="96" height="96" src={data.user.avatarURL} alt="avatar" />
 			</Avatar>
 			<div>
-				<CardTitle>{data.user.username}#{data.user.discriminator}</CardTitle>
+				<CardTitle>{data.user.username}</CardTitle>
 				<CardSubtitle>{data.user.id}</CardSubtitle>
 			</div>
 		</div>
@@ -83,7 +83,7 @@
 								</DataTableRow>
 								<DataTableRow>
 									<DataTableCell><b>Moderator</b></DataTableCell>
-									<DataTableCell>{ban.moderator ? `${ban.moderator.username}#${ban.moderator.discriminator} (${ban.moderator.id})` : 'System'}</DataTableCell>
+									<DataTableCell>{ban.moderator ? `${ban.moderator.username} (${ban.moderator.id})` : 'System'}</DataTableCell>
 								</DataTableRow>
 								<DataTableRow>
 									<DataTableCell><b>Reason</b></DataTableCell>

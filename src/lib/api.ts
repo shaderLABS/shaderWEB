@@ -3,7 +3,6 @@ import { snackbar } from './stores';
 export type UserInformation = {
 	id: string;
 	username: string;
-	discriminator: number;
 	avatarURL: string;
 	isBanned: boolean;
 };
@@ -20,13 +19,12 @@ export type BanInformation = {
 	moderator?: {
 		id: string;
 		username: string;
-		discriminator: number;
 	};
 	appeal?: BanAppeal;
 	appealCooldown: number;
 	reason: string;
-	contextURL: string;
-	expireTimestamp: string;
+	contextURL?: string;
+	expireTimestamp?: string;
 	timestamp: string;
 };
 

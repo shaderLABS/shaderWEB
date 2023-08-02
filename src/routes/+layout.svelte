@@ -5,7 +5,7 @@
 	import { AppBar, Button, Footer, Icon, MaterialAppMin, Snackbar } from 'svelte-materialify/src';
 
 	let snackbarVisible = false;
-	snackbar.subscribe((value) => (snackbarVisible = !!value));
+	snackbar.subscribe((value) => (snackbarVisible = Boolean(value)));
 
 	const errorCode = $page.url.searchParams.get('error');
 	if (errorCode) $snackbar = { content: decodeError(errorCode) };
