@@ -5,13 +5,13 @@ The website of the shaderLABS Discord server.
 ## Install Dependencies
 
 ```properties
-npm install
+bun install
 ```
 
 ## Building
 
 ```properties
-npm run build
+bun run build
 ```
 
 This will build a static single page application (SPA) to `./build/`. All files have precompressed variants: `x.gz` is compressed using gzip and `x.br` is compressed using Brotli.
@@ -20,4 +20,4 @@ The files in `./build/_app/` are suitable for cache bursting, which means that t
 
 ## Environment Variables
 
-This project uses Vite and its [environment variable system](https://vitejs.dev/guide/env-and-mode.html). Only `VITE_API_URL` in `.env.development` should be adjusted to match the URL of the development server on which the REST API is running.
+This project uses Vite and its [environment variable system](https://vitejs.dev/guide/env-and-mode.html). Only `VITE_API_URL` in `.env.development` should be adjusted to match the URL of the development server on which the HTTP API is running.
