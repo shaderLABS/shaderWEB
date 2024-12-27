@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { UserInformation } from '$lib/api';
 	import { logOut } from '$lib/api';
+	import * as Avatar from '$lib/components/ui/avatar/index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index';
 	import LogOut from 'lucide-svelte/icons/log-out';
@@ -14,7 +15,11 @@
 			<Card.Title>{user.username}</Card.Title>
 			<Card.Description>{user.id}</Card.Description>
 		</div>
-		<img class="rounded-full size-16" width="128" height="128" src={user.avatarURL} alt="avatar" />
+
+		<Avatar.Root class="size-16">
+			<Avatar.Image src={user.avatarURL} alt="avatar" />
+			<Avatar.Fallback>{user.username.substring(0, 2)}</Avatar.Fallback>
+		</Avatar.Root>
 	</Card.Content>
 
 	<Card.Footer>
