@@ -55,7 +55,7 @@ export function formatTime(time: string | number) {
 	});
 }
 
-export function fetchData(
+export function requestData(
 	endpoint: string,
 	fetchFunction: (input: RequestInfo, init?: RequestInit) => Promise<Response> = fetch
 ) {
