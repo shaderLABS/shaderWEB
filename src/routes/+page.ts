@@ -1,14 +1,25 @@
-import { fetchData } from '$lib/api';
+import { fetchData, type BanInformation, type UserInformation } from '$lib/api';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ fetch }) => {
-	const data = await fetchData('/api/user/me', fetch);
+	let user: UserInformation | null = null;
+	let ban: Promise<BanInformation | null> = Promise.resolve(null);
 
-	// 200 OK - user is logged in, data in response
-	// 204 No Content - user not logged in, no data available
-	if (data.status === 200) {
-		return { user: await data.json() };
+	try {
+		const userData = await fetchData('/api/user/me', fetch);
+
+		// 200 OK - user is logged in, data in response
+		// 204 No Content - user not logged in, no data available
+		if (userData.status === 200) {
+			user = await userData.json();
+			ban = fetchData('/api/ban/me', fetch).then((response) => {
+				if (!response.ok) return null;
+				return response.json();
+			});
+		}
+	} catch (error) {
+		console.error(error);
 	}
 
-	return { user: undefined };
+	return { user, ban };
 };

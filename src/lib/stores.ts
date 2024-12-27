@@ -1,13 +1,16 @@
 import { browser } from '$app/environment';
 import { writable } from 'svelte/store';
 
-export const snackbar = writable<{
-	content: string;
-	color?: 'red' | 'green';
-	timeout?: number;
-}>(undefined);
+export const dark = writable(!browser || localStorage.getItem('dark') === 'true');
 
-export const theme = writable((browser ? localStorage.getItem('theme') || 'dark' : 'dark') as 'dark' | 'light');
-theme.subscribe((value) => {
-	if (browser) localStorage.setItem('theme', value);
+dark.subscribe((value) => {
+	if (!browser) return;
+
+	localStorage.setItem('dark', value ? 'true' : 'false');
+
+	if (value) {
+		document.documentElement.classList.add('dark');
+	} else {
+		document.documentElement.classList.remove('dark');
+	}
 });
