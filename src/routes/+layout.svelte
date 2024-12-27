@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { displayErrorCode } from '$lib/api';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Toaster } from '$lib/components/ui/sonner/index';
+	import Sonner from '$lib/components/ui/sonner/sonner.svelte';
 	import { dark } from '$lib/stores';
 	import Moon from 'lucide-svelte/icons/moon';
 	import Sun from 'lucide-svelte/icons/sun';
@@ -17,7 +17,7 @@
 	});
 </script>
 
-<Toaster position="bottom-center" richColors closeButton theme={$dark ? 'dark' : 'light'} />
+<Sonner position="bottom-center" richColors closeButton theme={$dark ? 'dark' : 'light'} />
 
 <div class="flex flex-col justify-between min-h-screen">
 	<header class="w-full grow-0 border-b">
