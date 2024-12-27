@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
@@ -6,13 +6,19 @@
 		<title>shaderLABS Ban Appeal</title>
 		<meta name="description" content="Ban appeal form of the shaderLABS Discord server." />
 
-		<link rel="shortcut icon" href="/favicon.ico" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<script>
+			// avoid flash of unstyled content
+
+			let dark = localStorage.getItem('dark') !== 'false';
+			document.documentElement.classList.toggle('dark', dark);
+		</script>
 
 		%sveltekit.head%
 	</head>
-	<body>
-		<div>%sveltekit.body%</div>
-		<noscript>Please enable JavaScript in order to use this website.</noscript>
+	<body data-sveltekit-preload-data="hover" class="bg-background font-sans antialiased">
+		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>

@@ -1,4 +1,4 @@
-import { snackbar } from './stores';
+import { toast } from 'svelte-sonner';
 
 export type UserInformation = {
 	id: string;
@@ -28,13 +28,20 @@ export type BanInformation = {
 	timestamp: string;
 };
 
-export function decodeError(code: string) {
+function decodeErrorCode(code: string) {
 	switch (code) {
 		case '0':
 			return 'Failed to fetch account information.';
 		default:
 			return 'An error occured while logging in.';
 	}
+}
+
+export function displayErrorCode(code: string) {
+	toast.error('Authentication Error', {
+		description: decodeErrorCode(code),
+		duration: Number.POSITIVE_INFINITY
+	});
 }
 
 export function formatTime(time: string | number) {
@@ -44,17 +51,20 @@ export function formatTime(time: string | number) {
 		day: 'numeric',
 		hour: '2-digit',
 		minute: '2-digit',
-		hourCycle: 'h23',
+		hourCycle: 'h23'
 	});
 }
 
-export function fetchData(endpoint: string, fetchFunction: (input: RequestInfo, init?: RequestInit) => Promise<Response> = fetch) {
+export function requestData(
+	endpoint: string,
+	fetchFunction: (input: RequestInfo, init?: RequestInit) => Promise<Response> = fetch
+) {
 	return fetchFunction(import.meta.env.VITE_API_URL + endpoint, {
 		method: 'GET',
 		headers: {
-			Accept: 'application/json',
+			Accept: 'application/json'
 		},
-		credentials: 'include',
+		credentials: 'include'
 	});
 }
 
@@ -65,32 +75,39 @@ export function logIn() {
 export async function logOut() {
 	const { ok } = await fetch(import.meta.env.VITE_API_URL + '/api/auth/logout', {
 		method: 'POST',
-		credentials: 'include',
+		credentials: 'include'
 	});
 
 	if (ok) window.location.reload();
-	else snackbar.set({ content: 'Failed to log out.' });
+	else
+		toast.error('Authentication Error', {
+			description: 'Failed to log out.',
+			duration: Number.POSITIVE_INFINITY
+		});
 }
 
 export async function sendAppeal(reason: string): Promise<BanAppeal | undefined> {
 	const { ok } = await fetch(import.meta.env.VITE_API_URL + '/api/appeal', {
 		method: 'POST',
 		headers: {
-			'Content-Type': 'application/json',
+			'Content-Type': 'application/json'
 		},
 		body: JSON.stringify({
-			reason,
+			reason
 		}),
-		credentials: 'include',
+		credentials: 'include'
 	});
 
 	if (ok) {
-		snackbar.set({ content: 'Your ban appeal has been sent.', color: 'green' });
+		toast.success('Success', { description: 'Your ban appeal has been sent.' });
 		return {
 			result: 'pending',
-			timestamp: new Date().toISOString(),
+			timestamp: new Date().toISOString()
 		};
 	} else {
-		snackbar.set({ content: 'Failed to send your ban appeal.' });
+		toast.error('Server Error', {
+			description: 'Failed to send your ban appeal.',
+			duration: Number.POSITIVE_INFINITY
+		});
 	}
 }
