@@ -14,7 +14,20 @@ const config = {
 		adapter: adapter({
 			fallback: 'index.html',
 			precompress: true
-		})
+		}),
+		csp: {
+			// Using hashes instead of unsafe-inline is blocked by
+			// https://github.com/sveltejs/kit/issues/10510
+			// https://github.com/sveltejs/kit/issues/5215
+			directives: {
+				'default-src': ['self'],
+				'script-src': ['self', 'unsafe-inline'],
+				'style-src': ['self', 'unsafe-inline'],
+				'img-src': ['self', 'cdn.discordapp.com'],
+				'upgrade-insecure-requests': true
+			},
+			mode: 'hash'
+		}
 	}
 };
 
