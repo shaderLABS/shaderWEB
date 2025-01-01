@@ -24,6 +24,7 @@ const config = {
 				'script-src': ['self', 'unsafe-inline'],
 				'style-src': ['self', 'unsafe-inline'],
 				'img-src': ['self', 'cdn.discordapp.com'],
+				'connect-src': ['self', process.env.VITE_API_URL],
 				'upgrade-insecure-requests': true
 			},
 			mode: 'hash'
