@@ -24,12 +24,6 @@
 			<Table.Root>
 				<Table.Body>
 					<Table.Row>
-						<Table.Head>Moderator</Table.Head>
-						<Table.Cell>
-							{ban.moderator ? `${ban.moderator.username} (${ban.moderator.id})` : 'System'}
-						</Table.Cell>
-					</Table.Row>
-					<Table.Row>
 						<Table.Head>Reason</Table.Head>
 						<Table.Cell>{ban.reason}</Table.Cell>
 					</Table.Row>

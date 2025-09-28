@@ -16,10 +16,6 @@ export type BanAppeal = {
 
 export type BanInformation = {
 	id: string;
-	moderator?: {
-		id: string;
-		username: string;
-	};
 	appeal?: BanAppeal;
 	appealCooldown: number;
 	reason: string;
