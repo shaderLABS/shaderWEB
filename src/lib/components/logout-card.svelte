@@ -4,7 +4,7 @@
 	import * as Avatar from '$lib/components/ui/avatar/index.js';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index';
-	import LogOut from 'lucide-svelte/icons/log-out';
+	import LogOut from '@lucide/svelte/icons/log-out';
 
 	let { user }: { user: UserInformation } = $props();
 </script>

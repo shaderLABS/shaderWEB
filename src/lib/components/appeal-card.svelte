@@ -5,10 +5,10 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
-	import Ban from 'lucide-svelte/icons/ban';
-	import Clock from 'lucide-svelte/icons/clock';
-	import Hourglass from 'lucide-svelte/icons/hourglass';
-	import Send from 'lucide-svelte/icons/send';
+	import Ban from '@lucide/svelte/icons/ban';
+	import Clock from '@lucide/svelte/icons/clock';
+	import Hourglass from '@lucide/svelte/icons/hourglass';
+	import Send from '@lucide/svelte/icons/send';
 
 	let { appeal, appealCooldown }: { appeal: BanAppeal | undefined; appealCooldown: number } =
 		$props();

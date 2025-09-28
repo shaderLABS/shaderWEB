@@ -2,7 +2,7 @@
 	import { logIn } from '$lib/api';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index';
-	import LogIn from 'lucide-svelte/icons/log-in';
+	import LogIn from '@lucide/svelte/icons/log-in';
 </script>
 
 <Card.Root>

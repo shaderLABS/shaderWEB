@@ -3,7 +3,7 @@
 	import BanCard from '$lib/components/ban-card.svelte';
 	import LoginCard from '$lib/components/login-card.svelte';
 	import LogoutCard from '$lib/components/logout-card.svelte';
-	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
+	import LoaderCircle from '@lucide/svelte/icons/loader-circle';
 	import { slide } from 'svelte/transition';
 
 	let { data } = $props();

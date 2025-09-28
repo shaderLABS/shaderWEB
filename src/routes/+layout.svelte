@@ -4,8 +4,8 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import Sonner from '$lib/components/ui/sonner/sonner.svelte';
 	import { dark } from '$lib/stores';
-	import Moon from 'lucide-svelte/icons/moon';
-	import Sun from 'lucide-svelte/icons/sun';
+	import Moon from '@lucide/svelte/icons/moon';
+	import Sun from '@lucide/svelte/icons/sun';
 	import { onMount } from 'svelte';
 	import '../app.css';
 
